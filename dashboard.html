@@ -250,7 +250,7 @@
                     ABHA verified
                   </span>
                 </div>
-                <div class="identity-sub" id="detail-demographics">58 years · Female · A-1042 · General Medicine</div>
+                <div class="identity-sub" id="detail-demographics">58 years · Female · Token #1 · General Medicine</div>
                 <div class="identity-tags">
                   <span class="pill-tag" id="detail-lang">Hindi</span>
                   <span class="pill-tag allopathic" id="detail-mode-tag">Allopathic intake</span>
@@ -455,8 +455,8 @@
     // ═══════════════════════════════════════════════════════════════
     const patients = [
       {
-        id: "p-1042",
-        token: "A-1042",
+        id: "p-1",
+        token: "1",
         name: "Meena Kumari",
         age: 58,
         sex: "F",
@@ -517,8 +517,8 @@
         ]
       },
       {
-        id: "p-1043",
-        token: "A-1043",
+        id: "p-2",
+        token: "2",
         name: "Ravi Shankar",
         age: 42,
         sex: "M",
@@ -570,15 +570,57 @@
         ]
       },
       {
-        id: "p-1044",
-        token: "A-1044",
+        id: "p-3",
+        token: "3",
+        name: "Sunita Devi",
+        age: 62,
+        sex: "F",
+        department: "General Medicine",
+        language: "Hindi",
+        status: "priority",
+        wait_time: "8 min",
+        complaint: "High fever + productive cough (SpO2 93%)",
+        risk: "high",
+        abha: "Verified",
+        mode: "allopathic",
+        arrived: "09:50",
+        alert: "High fever (102°F) with SpO2 93% on room air and tachypnea detected at Kiosk triage. Urgent review needed.",
+        alertMeta: "AI confidence 96% · Flagged 1 min ago",
+        allopathicSummary: [
+          ["Chief complaint", "High-grade fever (102°F) with rigors and productive cough with yellowish sputum for 4 days."],
+          ["History of present illness", "Dyspnea on minimal exertion (NYHA Class II). Pleuritic right-sided chest pain on deep inspiration. Kiosk vitals: SpO2 93%, RR 26/min, HR 102 bpm."],
+          ["Past history", "Chronic Bronchitis (COPD Stage 1)."],
+          ["Medications & allergies", "Inhaler Formoterol/Budesonide PRN. NKDA."]
+        ],
+        ayushSummary: [
+          ["Pradhana Vedana", "Jwara (high fever) with Kasa (productive cough) and Shwasa."],
+          ["Prakriti & Dosha", "Vata-Kapha Sannipataja Jwara, Pranavaha Srotas dusti."],
+          ["Agni", "Teevra Agni mandya, Aama lakshana."]
+        ],
+        documents: [
+          {
+            title: "Kiosk Vital Signs Vitals-Print",
+            type: "Diagnostics",
+            date: "Today, 09:52 AM",
+            desc: "Terminal 02 Auto-Sensor",
+            flags: [{ text: "SpO2 93% ↓ Low", type: "critical" }, { text: "RR 26/min ↑ High", type: "critical" }, { text: "Temp 102.1°F ↑", type: "critical" }]
+          }
+        ],
+        transcript: [
+          { speaker: "Kiosk AI", orig: "नमस्ते सुनीता जी, बुखार कितने दिन से है और सांस में तकलीफ हो रही है?", trans: "Namaste Sunita ji, how long has the fever been present and is breathing difficult?", isKiosk: true },
+          { speaker: "Sunita Devi", orig: "4 दिन से तेज बुखार है, खांसी में पीला बलगम आ रहा है और सांस फूल रही है।", trans: "High fever for 4 days, coughing yellow phlegm and feeling short of breath.", isKiosk: false }
+        ]
+      },
+      {
+        id: "p-4",
+        token: "4",
         name: "Ayesha Khan",
         age: 29,
         sex: "F",
         department: "General Medicine",
         language: "English",
         status: "intake",
-        wait_time: "8 min",
+        wait_time: "12 min",
         complaint: "Fatigue for 3 weeks",
         risk: "low",
         abha: "Verified",
@@ -614,15 +656,15 @@
         ]
       },
       {
-        id: "p-1045",
-        token: "A-1045",
+        id: "p-5",
+        token: "5",
         name: "Suresh Patil",
         age: 67,
         sex: "M",
         department: "Ayurveda OPD",
         language: "Marathi",
         status: "ready",
-        wait_time: "11 min",
+        wait_time: "15 min",
         complaint: "Knee pain, stiffness",
         risk: "low",
         abha: "Verified",
@@ -658,15 +700,15 @@
         ]
       },
       {
-        id: "p-1046",
-        token: "A-1046",
+        id: "p-6",
+        token: "6",
         name: "Nandini Rao",
         age: 36,
         sex: "F",
         department: "General Medicine",
         language: "Kannada",
         status: "intake",
-        wait_time: "16 min",
+        wait_time: "18 min",
         complaint: "Recurrent headache",
         risk: "medium",
         abha: "Verified",
@@ -701,15 +743,15 @@
         ]
       },
       {
-        id: "p-1047",
-        token: "A-1047",
+        id: "p-7",
+        token: "7",
         name: "Rajesh Verma",
         age: 51,
         sex: "M",
         department: "General Medicine",
         language: "Hindi",
         status: "ready",
-        wait_time: "22 min",
+        wait_time: "24 min",
         complaint: "Diabetes follow-up & HbA1c review",
         risk: "low",
         abha: "Verified",
@@ -740,55 +782,13 @@
           { speaker: "Kiosk AI", orig: "नमस्ते राजेश जी, शुगर और बीपी की दवाएं नियमित चल रही हैं?", trans: "Namaste Rajesh ji, are diabetes and BP medications regular?", isKiosk: true },
           { speaker: "Rajesh Verma", orig: "जी हां, दवाएं रोज़ ले रहा हूं, सुबह की शुगर 120-130 के बीच रहती है।", trans: "Yes, taking daily, morning fasting glucose stays around 120-130.", isKiosk: false }
         ]
-      },
-      {
-        id: "p-1048",
-        token: "A-1048",
-        name: "Sunita Devi",
-        age: 62,
-        sex: "F",
-        department: "General Medicine",
-        language: "Hindi",
-        status: "priority",
-        wait_time: "25 min",
-        complaint: "High fever + productive cough (SpO2 93%)",
-        risk: "high",
-        abha: "Verified",
-        mode: "allopathic",
-        arrived: "09:50",
-        alert: "High fever (102°F) with SpO2 93% on room air and tachypnea detected at Kiosk triage. Urgent review needed.",
-        alertMeta: "AI confidence 96% · Flagged 1 min ago",
-        allopathicSummary: [
-          ["Chief complaint", "High-grade fever (102°F) with rigors and productive cough with yellowish sputum for 4 days."],
-          ["History of present illness", "Dyspnea on minimal exertion (NYHA Class II). Pleuritic right-sided chest pain on deep inspiration. Kiosk vitals: SpO2 93%, RR 26/min, HR 102 bpm."],
-          ["Past history", "Chronic Bronchitis (COPD Stage 1)."],
-          ["Medications & allergies", "Inhaler Formoterol/Budesonide PRN. NKDA."]
-        ],
-        ayushSummary: [
-          ["Pradhana Vedana", "Jwara (high fever) with Kasa (productive cough) and Shwasa."],
-          ["Prakriti & Dosha", "Vata-Kapha Sannipataja Jwara, Pranavaha Srotas dusti."],
-          ["Agni", "Teevra Agni mandya, Aama lakshana."]
-        ],
-        documents: [
-          {
-            title: "Kiosk Vital Signs Vitals-Print",
-            type: "Diagnostics",
-            date: "Today, 09:52 AM",
-            desc: "Terminal 02 Auto-Sensor",
-            flags: [{ text: "SpO2 93% ↓ Low", type: "critical" }, { text: "RR 26/min ↑ High", type: "critical" }, { text: "Temp 102.1°F ↑", type: "critical" }]
-          }
-        ],
-        transcript: [
-          { speaker: "Kiosk AI", orig: "नमस्ते सुनीता जी, बुखार कितने दिन से है और सांस में तकलीफ हो रही है?", trans: "Namaste Sunita ji, how long has the fever been present and is breathing difficult?", isKiosk: true },
-          { speaker: "Sunita Devi", orig: "4 दिन से तेज बुखार है, खांसी में पीला बलगम आ रहा है और सांस फूल रही है।", trans: "High fever for 4 days, coughing yellow phlegm and feeling short of breath.", isKiosk: false }
-        ]
       }
     ];
 
     // ═══════════════════════════════════════════════════════════════
     // APP STATE
     // ═══════════════════════════════════════════════════════════════
-    let activePatientId = "p-1042";
+    let activePatientId = "p-1";
     let activeMode = "allopathic"; // "allopathic" | "ayush"
     let activeFilter = "all";      // "all" | "priority" | "ready"
     let searchQuery = "";
@@ -1263,7 +1263,7 @@
 
     // Sidebar notification & export clicks
     document.getElementById('btn-notifications')?.addEventListener('click', () => {
-      showToast("2 Priority alerts: Meena Kumari (A-1042) & Sunita Devi (A-1048)");
+      showToast("Priority alerts: Meena Kumari (Token #1) & Sunita Devi (Token #3)");
     });
     document.getElementById('btn-export-transcript').addEventListener('click', () => {
       showToast("✓ Audio transcript exported as encrypted clinical audit log");
@@ -1312,51 +1312,124 @@
     }
 
     // ═══════════════════════════════════════════════════════════════
+    // QUEUE METRICS & DYNAMIC COUNTER UPDATE
+    // ═══════════════════════════════════════════════════════════════
+    function updateQueueMetrics() {
+      const totalWaiting = patients.length;
+      const totalReady = patients.filter(p => p.status === 'ready').length;
+      const totalPriority = patients.filter(p => p.status === 'priority').length;
+
+      const elWaiting = document.getElementById('metric-waiting');
+      if (elWaiting) elWaiting.textContent = totalWaiting;
+
+      const elReady = document.getElementById('metric-ready');
+      if (elReady) elReady.textContent = totalReady;
+
+      const elAlerts = document.getElementById('metric-alerts');
+      if (elAlerts) elAlerts.textContent = totalPriority;
+
+      // Update Filter Button Labels
+      filterButtons.forEach(btn => {
+        const filter = btn.getAttribute('data-filter');
+        if (filter === 'all') btn.textContent = `All ${totalWaiting}`;
+        else if (filter === 'priority') btn.textContent = `Priority ${totalPriority}`;
+        else if (filter === 'ready') btn.textContent = `Ready ${totalReady}`;
+      });
+
+      // Update Topbar Live Queue Pill
+      const livePill = document.querySelector('.live-pill span:last-child');
+      if (livePill) livePill.textContent = `Live queue ${totalWaiting}`;
+    }
+
+    // ═══════════════════════════════════════════════════════════════
     // INITIAL BOOT & SUPABASE QUEUE SYNC
     // ═══════════════════════════════════════════════════════════════
     async function loadDynamicPatients() {
       if (window.DocSeeDB) {
         const liveQueue = await window.DocSeeDB.getQueue();
+        const allCases = window.DocSeeDB.getAllCases ? window.DocSeeDB.getAllCases() : {};
+
         if (liveQueue && liveQueue.length > 0) {
           liveQueue.forEach(item => {
-            if (!patients.some(p => p.token === item.token_number || p.name === item.patient_name)) {
-              patients.unshift({
-                id: 'pat-' + item.token_number.toLowerCase().replace('-', ''),
-                name: item.patient_name || 'Patient',
-                token: item.token_number || 'A-1099',
-                age: item.age || 35,
-                sex: item.gender === 'Female' ? 'F' : 'M',
-                phone: '+91 98XXX-XXXXX',
-                language: 'Hindi / English',
-                department: item.department || 'General Medicine',
-                status: item.priority_level === 'Emergency' ? 'priority' : (item.priority_level === 'Priority' ? 'priority' : 'waiting'),
-                wait_time: (item.estimated_wait_min || 12) + 'm wait',
-                arrived: 'Just now',
-                mode: item.department && item.department.includes('Ayurveda') ? 'ayush' : 'allopathic',
-                complaint: item.chief_complaint || 'Clinical Intake',
-                vitals: {
-                  bp: `${item.vitals?.bpSys || 120}/${item.vitals?.bpDia || 80} mmHg`,
-                  hr: `${item.vitals?.hr || 74} bpm`,
-                  temp: `${item.vitals?.temp || 98.6}°F`,
-                  spo2: `${item.vitals?.spo2 || 98}%`,
-                  wt: `${item.vitals?.weight || 65} kg`,
-                  sugar: `${item.vitals?.rbs || 105} mg/dL`
-                },
-                summary: `Patient ${item.patient_name} presented via DocSee Kiosk with ${item.chief_complaint}. Vitals and case history structured for clinical review.`,
-                timeline: [
-                  { time: "Just now", title: "DocSee Patient Intake Submitted", desc: "Patient completed voice/touch intake & verified summary.", tag: "kiosk" }
-                ],
-                documents: [],
-                transcript: [
-                  { speaker: "Kiosk", orig: "Please describe your main symptoms.", trans: "Please describe your main symptoms.", isKiosk: true },
-                  { speaker: item.patient_name, orig: item.symptoms_narrative || item.chief_complaint, trans: item.symptoms_narrative || item.chief_complaint, isKiosk: false }
-                ],
-                openingQuestion: `How long have you been feeling ${item.chief_complaint.toLowerCase()}?`
-              });
+            const tokenStr = item.token_number ? item.token_number.toString() : '';
+            const existingIdx = patients.findIndex(p => p.token === tokenStr || (tokenStr && p.id === 'pat-' + tokenStr));
+            const caseDetail = allCases[tokenStr] || {};
+
+            const bpStr = item.vitals?.bpSys ? `${item.vitals.bpSys}/${item.vitals.bpDia || 80} mmHg` : (item.vitals?.bp || '120/80 mmHg');
+            const hrStr = item.vitals?.hr ? `${item.vitals.hr} bpm` : '74 bpm';
+            const tempStr = item.vitals?.temp ? `${item.vitals.temp}°F` : '98.6°F';
+            const spo2Str = item.vitals?.spo2 ? `${item.vitals.spo2}%` : '98%';
+
+            const patObj = {
+              id: 'pat-' + tokenStr,
+              token: tokenStr,
+              name: item.patient_name || caseDetail.patient_name || 'Patient',
+              age: item.age || caseDetail.age || 35,
+              sex: (item.gender === 'Female' || caseDetail.gender === 'Female') ? 'F' : 'M',
+              phone: caseDetail.phone || '+91 98XXX-XXXXX',
+              language: caseDetail.language ? (caseDetail.language.toUpperCase() + ' / English') : 'Hindi / English',
+              department: item.department || caseDetail.department || 'General Medicine',
+              status: item.priority_level === 'Emergency' || item.priority_level === 'Priority' ? 'priority' : (item.status === 'ready' ? 'ready' : 'intake'),
+              wait_time: (item.estimated_wait_min || 8) + ' min',
+              complaint: item.chief_complaint || caseDetail.chief_complaint || 'Clinical Intake',
+              risk: item.priority_level === 'Emergency' || item.priority_level === 'Priority' ? 'high' : 'low',
+              abha: caseDetail.abha_id ? 'Verified' : 'ABHA Pending',
+              mode: (item.department && item.department.includes('Ayurveda')) ? 'ayush' : 'allopathic',
+              arrived: 'Just now',
+              alert: (item.priority_level === 'Priority' || item.priority_level === 'Emergency') ? `${item.chief_complaint} flagged for urgent clinical review.` : null,
+              alertMeta: 'Kiosk Triage Alert · Just now',
+              allopathicSummary: [
+                ["Chief complaint", item.chief_complaint || caseDetail.chief_complaint || 'General Checkup'],
+                ["History of present illness", caseDetail.symptoms_narrative || `Patient presents via DocSee kiosk with ${item.chief_complaint}. Vitals: BP ${bpStr}, SpO2 ${spo2Str}, HR ${hrStr}.`],
+                ["Past history", (caseDetail.existing_conditions && caseDetail.existing_conditions.length) ? caseDetail.existing_conditions.join(', ') : 'None declared'],
+                ["Medications & allergies", `Meds: ${caseDetail.current_medications || 'None'} · Allergies: ${caseDetail.known_allergies || 'NKDA'}`],
+                ["Review of systems", `Surgeries: ${caseDetail.past_surgeries || 'None'}. Family History: ${(caseDetail.family_history && caseDetail.family_history.length) ? caseDetail.family_history.join(', ') : 'None'}`]
+              ],
+              ayushSummary: [
+                ["Pradhana Vedana", `${item.chief_complaint} (Lakshana presentation recorded)`],
+                ["Prakriti & Dosha", (item.department && item.department.includes('Ayurveda')) ? "Vata-Pitta Dominant with Agnimandya" : "Prakriti Assessment Recommended"],
+                ["Agni & Koshtha", "Mandaagni with Aama lakshana"],
+                ["Ahara & Vihara", "Diet and lifestyle details logged via Kiosk Q&A"]
+              ],
+              documents: [
+                {
+                  title: "Kiosk Triage Summary & Vitals",
+                  type: "Intake Slip",
+                  date: "Just now",
+                  desc: `DocSee Kiosk Record #${tokenStr}`,
+                  flags: [{ text: `BP ${bpStr}`, type: "ok" }, { text: `SpO2 ${spo2Str}`, type: item.vitals?.spo2 && parseInt(item.vitals.spo2) < 94 ? "critical" : "ok" }]
+                }
+              ],
+              transcript: [
+                { speaker: "Kiosk AI", orig: "Please describe your main symptoms.", trans: "Please describe your main symptoms.", isKiosk: true },
+                { speaker: item.patient_name || "Patient", orig: caseDetail.symptoms_narrative || item.chief_complaint, trans: caseDetail.symptoms_narrative || item.chief_complaint, isKiosk: false }
+              ]
+            };
+
+            if (existingIdx >= 0) {
+              patients[existingIdx] = patObj;
+            } else {
+              patients.unshift(patObj);
             }
           });
         }
       }
+
+      // Check if URL specifies a target token to select
+      const urlParams = new URLSearchParams(window.location.search);
+      const targetToken = urlParams.get('token');
+      if (targetToken) {
+        const found = patients.find(p => p.token === targetToken || p.id === 'pat-' + targetToken);
+        if (found) {
+          activePatientId = found.id;
+        }
+      }
+
+      renderPatientList();
+      renderPatientDetail();
+      updateQueueMetrics();
+    }
+
     // ═══════════════════════════════════════════════════════════════
     // ACCOUNT & SESSION MANAGEMENT (SIGN OUT & DELETE ACCOUNT)
     // ═══════════════════════════════════════════════════════════════
@@ -1385,16 +1458,24 @@
         } catch (e) {}
       }
 
-      document.getElementById('sidebar-doc-name').textContent = user.name;
-      document.getElementById('sidebar-avatar').textContent = user.avatar || 'PS';
-      document.getElementById('topbar-avatar').textContent = user.avatar || 'PS';
-      document.getElementById('topbar-greeting').innerHTML = `Good morning, ${user.name.split(' ')[1] || user.name} <span class="sparkle">✦</span>`;
+      const elSidebarName = document.getElementById('sidebar-doc-name');
+      if (elSidebarName) elSidebarName.textContent = user.name;
+      const elSidebarAvatar = document.getElementById('sidebar-avatar');
+      if (elSidebarAvatar) elSidebarAvatar.textContent = user.avatar || 'PS';
+      const elTopAvatar = document.getElementById('topbar-avatar');
+      if (elTopAvatar) elTopAvatar.textContent = user.avatar || 'PS';
+      const elGreeting = document.getElementById('topbar-greeting');
+      if (elGreeting) elGreeting.innerHTML = `Good morning, ${user.name.split(' ')[1] || user.name} <span class="sparkle">✦</span>`;
       
       // Update account modal fields
-      document.getElementById('modal-doc-name').textContent = user.name;
-      document.getElementById('modal-doc-email').textContent = user.email || user.phone || 'priya.sharma@aiims.edu';
-      document.getElementById('modal-doc-auth').textContent = user.authMethod || 'Google Sign-In';
-      document.getElementById('modal-doc-dept').textContent = user.department || 'Medicine OPD 2';
+      const elModalName = document.getElementById('modal-doc-name');
+      if (elModalName) elModalName.textContent = user.name;
+      const elModalEmail = document.getElementById('modal-doc-email');
+      if (elModalEmail) elModalEmail.textContent = user.email || user.phone || 'priya.sharma@aiims.edu';
+      const elModalAuth = document.getElementById('modal-doc-auth');
+      if (elModalAuth) elModalAuth.textContent = user.authMethod || 'Google Sign-In';
+      const elModalDept = document.getElementById('modal-doc-dept');
+      if (elModalDept) elModalDept.textContent = user.department || 'Medicine OPD 2';
     }
 
     function openAccountModal() {
@@ -1426,6 +1507,7 @@
           localStorage.removeItem('DOCSEE_USER_SESSION');
           localStorage.removeItem('DOCSEE_LOCAL_QUEUE_V1');
           localStorage.removeItem('DOCSEE_LOCAL_CASES_V1');
+          localStorage.removeItem('DOCSEE_TOKEN_COUNTER');
           showToast("✓ Clinician account and local session deleted.");
           setTimeout(() => {
             window.location.href = "index.html";
@@ -1434,8 +1516,22 @@
       });
     }
 
+    // Real-time Listeners for instant patient queue updates
+    window.addEventListener('docsee:queue-updated', () => {
+      loadDynamicPatients();
+    });
+
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'DOCSEE_LOCAL_QUEUE_V1' || e.key === 'DOCSEE_LOCAL_CASES_V1') {
+        loadDynamicPatients();
+      }
+    });
+
+    // Boot — DO NOT call loadDynamicPatients here; DocSeeDB is not yet loaded.
+    // It will be called in the script block after supabase-client.js loads.
     loadUserProfile();
-    loadDynamicPatients();
+    renderPatientList();
+    renderPatientDetail();
   </script>
 
   <!-- ACCOUNT & SESSION MANAGEMENT MODAL -->
@@ -1534,5 +1630,9 @@
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-client.js"></script>
+  <!-- Boot: load dynamic patient queue AFTER DocSeeDB is initialized -->
+  <script>
+    loadDynamicPatients();
+  </script>
 </body>
 </html>

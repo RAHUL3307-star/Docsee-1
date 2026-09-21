@@ -18,6 +18,7 @@ class DocSeeDatabase {
     this.config = { ...DEFAULT_SUPABASE_CONFIG };
     this.localQueueKey = 'DOCSEE_LOCAL_QUEUE_V1';
     this.localCasesKey = 'DOCSEE_LOCAL_CASES_V1';
+    this.tokenCounterKey = 'DOCSEE_TOKEN_COUNTER';
     this.init();
   }
 
@@ -38,53 +39,95 @@ class DocSeeDatabase {
     this.initLocalStore();
   }
 
+  // Generate clean sequential token numbers: 1, 2, 3, 4, ... up to infinity
+  getNextTokenNumber() {
+    let current = parseInt(localStorage.getItem(this.tokenCounterKey) || '0', 10);
+    if (isNaN(current) || current < 0) current = 0;
+    current += 1;
+    localStorage.setItem(this.tokenCounterKey, current.toString());
+    return current;
+  }
+
   initLocalStore() {
+    // Reset token counter if it was never set OR if it got corrupted to 1000+
+    const savedCounter = localStorage.getItem(this.tokenCounterKey);
+    const counterVal = parseInt(savedCounter || '0', 10);
+    if (!savedCounter || isNaN(counterVal) || counterVal >= 1000) {
+      localStorage.setItem(this.tokenCounterKey, '3');
+    }
+
     if (!localStorage.getItem(this.localQueueKey)) {
       const defaultQueue = [
         {
           id: 'case-001',
-          token_number: 'A-1048',
-          patient_name: 'Rahul Kumar',
-          age: 42,
-          gender: 'Male',
+          token_number: '1',
+          patient_name: 'Meena Kumari',
+          age: 58,
+          gender: 'Female',
           department: 'General Medicine',
-          chief_complaint: 'Chest Pain / Fatigue',
+          chief_complaint: 'Chest discomfort + breathlessness',
           priority_level: 'Priority',
-          status: 'waiting',
-          estimated_wait_min: 10,
-          vitals: { bp: '142/90', hr: 92, temp: '98.6', spo2: 97, rbs: 145 },
+          status: 'priority',
+          estimated_wait_min: 5,
+          vitals: { bpSys: '148', bpDia: '92', hr: 88, temp: '98.4', spo2: 97, rbs: 164 },
           created_at: new Date().toISOString()
         },
         {
           id: 'case-002',
-          token_number: 'A-1049',
-          patient_name: 'Savitri Devi',
-          age: 58,
-          gender: 'Female',
-          department: 'General Medicine',
-          chief_complaint: 'Joint Pain (Knee arthritis)',
+          token_number: '2',
+          patient_name: 'Ravi Shankar',
+          age: 42,
+          gender: 'Male',
+          department: 'Ayurveda OPD',
+          chief_complaint: 'Indigestion, irregular sleep',
           priority_level: 'Standard',
-          status: 'waiting',
-          estimated_wait_min: 18,
-          vitals: { bp: '130/84', hr: 76, temp: '98.4', spo2: 98, rbs: 110 },
+          status: 'ready',
+          estimated_wait_min: 12,
+          vitals: { bpSys: '120', bpDia: '80', hr: 74, temp: '98.6', spo2: 98, rbs: 105 },
           created_at: new Date(Date.now() - 1000 * 60 * 12).toISOString()
         },
         {
           id: 'case-003',
-          token_number: 'A-1050',
-          patient_name: 'Anil Deshmukh',
-          age: 34,
-          gender: 'Male',
-          department: 'Ayurveda OPD',
-          chief_complaint: 'Digestive issues & Acidity',
-          priority_level: 'Standard',
-          status: 'waiting',
-          estimated_wait_min: 24,
-          vitals: { bp: '118/78', hr: 70, temp: '98.6', spo2: 99, rbs: 95 },
+          token_number: '3',
+          patient_name: 'Sunita Devi',
+          age: 62,
+          gender: 'Female',
+          department: 'General Medicine',
+          chief_complaint: 'High fever + productive cough (SpO2 93%)',
+          priority_level: 'Emergency',
+          status: 'priority',
+          estimated_wait_min: 2,
+          vitals: { bpSys: '118', bpDia: '76', hr: 102, temp: '102.1', spo2: 93, rbs: 128 },
           created_at: new Date(Date.now() - 1000 * 60 * 25).toISOString()
         }
       ];
       localStorage.setItem(this.localQueueKey, JSON.stringify(defaultQueue));
+    }
+
+    if (!localStorage.getItem(this.localCasesKey)) {
+      const defaultCases = {
+        "1": {
+          id: 'case-001',
+          token_number: '1',
+          patient_name: 'Meena Kumari',
+          age: 58,
+          gender: 'Female',
+          department: 'General Medicine',
+          chief_complaint: 'Chest discomfort + breathlessness',
+          symptoms_narrative: 'Central, pressure-like chest discomfort radiating to left shoulder with shortness of breath on exertion.',
+          existing_conditions: ['Type-2 Diabetes Mellitus (8 yrs)', 'Essential Hypertension (5 yrs)'],
+          current_medications: 'Metformin 500mg BD, Amlodipine 5mg OD',
+          known_allergies: 'Penicillin (Severe urticaria)',
+          past_surgeries: 'Cholecystectomy (2018)',
+          family_history: ['Diabetes in mother', 'Hypertension in father'],
+          vitals: { bpSys: '148', bpDia: '92', hr: 88, temp: '98.4', spo2: 97, weight: 65, rbs: 164 },
+          priority_level: 'Priority',
+          status: 'waiting',
+          clinical_summary: 'Patient Meena Kumari (58y/Female) presents with chest discomfort and breathlessness. Vitals: BP 148/92, SpO2 97%, HR 88 bpm. Priority: High.',
+          created_at: new Date().toISOString()
+        }
+      };
+      localStorage.setItem(this.localCasesKey, JSON.stringify(defaultCases));
     }
   }
 
@@ -111,7 +154,19 @@ class DocSeeDatabase {
   // 1. SAVE PATIENT INTAKE & CREATE DIGITAL CASE RECORD
   async savePatientIntake(caseData) {
     const timestamp = new Date().toISOString();
-    const token = caseData.tokenNumber || ('A-' + Math.floor(1040 + Math.random() * 50));
+    
+    // Assign sequential token: 1, 2, 3, 4, ...
+    let token = caseData.tokenNumber;
+    if (!token || typeof token !== 'string' || token.startsWith('A-') || isNaN(parseInt(token, 10))) {
+      token = this.getNextTokenNumber().toString();
+    } else {
+      // Ensure token counter stays ahead
+      const numVal = parseInt(token, 10);
+      const currentCounter = parseInt(localStorage.getItem(this.tokenCounterKey) || '0', 10);
+      if (!isNaN(numVal) && numVal >= currentCounter) {
+        localStorage.setItem(this.tokenCounterKey, numVal.toString());
+      }
+    }
     
     // Auto calculate triage priority
     let priority = 'Standard';
@@ -132,7 +187,7 @@ class DocSeeDatabase {
       age: parseInt(caseData.age) || 0,
       gender: caseData.gender || 'Not specified',
       phone: caseData.phone || '',
-      abha_id: caseData.abha || '91-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000),
+      abha_id: caseData.abha || ('91-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000)),
       department: caseData.department || 'General Medicine',
       language: caseData.language || 'en',
       address: caseData.address || '',
@@ -157,14 +212,16 @@ class DocSeeDatabase {
       family_history: caseData.familyHistory || [],
       vitals: caseData.vitals || {},
       priority_level: priority,
-      status: 'waiting',
+      status: priority === 'Priority' || priority === 'Emergency' ? 'priority' : 'waiting',
       clinical_summary: `Patient ${patientRecord.full_name} (${patientRecord.age}y/${patientRecord.gender}) presents with ${caseData.complaint || 'unspecified complaint'}. Vitals: BP ${caseData.vitals?.bpSys || 120}/${caseData.vitals?.bpDia || 80}, SpO2 ${caseData.vitals?.spo2 || 98}%, HR ${caseData.vitals?.hr || 74} bpm. Priority: ${priority}.`,
       created_at: timestamp
     };
 
     // Save to LocalStorage first (instant UI responsiveness & offline resiliency)
     const localQueue = JSON.parse(localStorage.getItem(this.localQueueKey) || '[]');
-    localQueue.unshift({
+    // Filter out existing token if duplicate
+    const updatedQueue = localQueue.filter(q => q.token_number !== token);
+    updatedQueue.unshift({
       id: caseRecord.id,
       token_number: token,
       patient_name: patientRecord.full_name,
@@ -173,16 +230,21 @@ class DocSeeDatabase {
       department: patientRecord.department,
       chief_complaint: caseRecord.chief_complaint,
       priority_level: priority,
-      status: 'waiting',
-      estimated_wait_min: Math.floor(8 + Math.random() * 15),
+      status: caseRecord.status,
+      estimated_wait_min: Math.floor(6 + Math.random() * 12),
       vitals: caseRecord.vitals,
       created_at: timestamp
     });
-    localStorage.setItem(this.localQueueKey, JSON.stringify(localQueue));
+    localStorage.setItem(this.localQueueKey, JSON.stringify(updatedQueue));
 
     const localCases = JSON.parse(localStorage.getItem(this.localCasesKey) || '{}');
     localCases[token] = caseRecord;
     localStorage.setItem(this.localCasesKey, JSON.stringify(localCases));
+
+    // Dispatch custom event for real-time app update in same window / listeners
+    try {
+      window.dispatchEvent(new CustomEvent('docsee:queue-updated', { detail: { token, caseRecord } }));
+    } catch (e) {}
 
     // Try Supabase Cloud Insert if connected
     if (this.client && this.config.isConnected) {
@@ -284,6 +346,11 @@ class DocSeeDatabase {
     }
     const localCases = JSON.parse(localStorage.getItem(this.localCasesKey) || '{}');
     return localCases[token] || null;
+  }
+
+  // 4. FETCH ALL LOCAL STORED CASE SHEETS
+  getAllCases() {
+    return JSON.parse(localStorage.getItem(this.localCasesKey) || '{}');
   }
 }
 

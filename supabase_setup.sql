@@ -99,14 +99,14 @@ CREATE POLICY "Allow public update on docsee_queue" ON docsee_queue FOR UPDATE U
 -- 6. Sample Initial Seed Data
 INSERT INTO docsee_patients (token_number, full_name, age, gender, phone, abha_id, department, language)
 VALUES 
-('A-1042', 'Rahul Kumar', 42, 'Male', '9876543210', '91-4829-1029-4401', 'General Medicine', 'hi'),
-('A-1043', 'Savitri Devi', 58, 'Female', '9812345678', '91-5512-8821-9920', 'General Medicine', 'hi'),
-('A-1044', 'Anil Deshmukh', 34, 'Male', '9723456789', '91-3310-4491-1123', 'Ayurveda OPD', 'mr');
+('1', 'Meena Kumari', 58, 'Female', '9876543210', '91-4829-1029-4401', 'General Medicine', 'hi'),
+('2', 'Ravi Shankar', 42, 'Male', '9812345678', '91-5512-8821-9920', 'Ayurveda OPD', 'hi'),
+('3', 'Sunita Devi', 62, 'Female', '9723456789', '91-3310-4491-1123', 'General Medicine', 'hi');
 
 INSERT INTO docsee_cases (patient_id, token_number, chief_complaint, symptoms_narrative, bp_systolic, bp_diastolic, heart_rate, temperature_f, spo2_percent, priority_level, clinical_summary)
-SELECT id, 'A-1042', 'Chest Pain / Breathlessness', 'Chest tightness on exertion for 2 hours, radiates to left shoulder. Sweating present.', 145, 92, 94, 98.6, 96, 'Priority', 'Patient presents with acute sub-sternal chest discomfort radiating to left upper arm. Vitals show mild hypertension with tachycardia.'
-FROM docsee_patients WHERE token_number = 'A-1042';
+SELECT id, '1', 'Chest discomfort + breathlessness', 'Chest tightness on exertion for 2 hours, radiates to left shoulder. Sweating present.', 148, 92, 88, 98.4, 97, 'Priority', 'Patient presents with acute sub-sternal chest discomfort radiating to left upper arm. Vitals show mild hypertension with tachycardia.'
+FROM docsee_patients WHERE token_number = '1';
 
 INSERT INTO docsee_queue (patient_id, token_number, patient_name, age, gender, department, chief_complaint, priority_level, status, estimated_wait_min)
-SELECT id, 'A-1042', 'Rahul Kumar', 42, 'Male', 'General Medicine', 'Chest Pain', 'Priority', 'waiting', 8
-FROM docsee_patients WHERE token_number = 'A-1042';
+SELECT id, '1', 'Meena Kumari', 58, 'Female', 'General Medicine', 'Chest discomfort + breathlessness', 'Priority', 'waiting', 5
+FROM docsee_patients WHERE token_number = '1';

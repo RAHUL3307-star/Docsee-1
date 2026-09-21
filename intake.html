@@ -214,11 +214,11 @@
       <p class="step-desc">Please enter your details or scan your ABHA card. Fields marked * are required.</p>
       <div class="hint-box">
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/></svg>
-        <span>If you have an <strong>ABHA card</strong>, scan it to auto-fill your details. Or enter them manually below.</span>
+        <span>If you have an <strong>ABHA ID</strong>, enter it to link your digital health records. Or leave blank to auto-generate.</span>
       </div>
       <div class="form-grid">
         <div class="form-field"><label class="form-label">Full Name *</label><input type="text" class="form-input" id="reg-name" placeholder="e.g. Meena Kumari"></div>
-        <div class="form-field"><label class="form-label">ABHA ID / Aadhaar</label><input type="text" class="form-input" id="reg-abha" placeholder="XXXX-XXXX-8892"></div>
+        <div class="form-field"><label class="form-label">ABHA ID (National Health ID - Optional)</label><input type="text" class="form-input" id="reg-abha" placeholder="e.g. 91-4432-8871-0024"></div>
         <div class="form-field"><label class="form-label">Age *</label><input type="number" class="form-input" id="reg-age" placeholder="e.g. 42" min="0" max="120"></div>
         <div class="form-field"><label class="form-label">Gender *</label><select class="form-select" id="reg-gender"><option value="">Select gender</option><option>Male</option><option>Female</option><option>Other / Prefer not to say</option></select></div>
         <div class="form-field"><label class="form-label">Mobile Number *</label><input type="tel" class="form-input" id="reg-phone" placeholder="10-digit number"></div>
@@ -392,8 +392,8 @@
           </div>
         </div>
         <div class="action-btns">
-          <a href="dashboard.html" class="btn-next"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg> Doctor Dashboard</a>
-          <a href="casesheet.html" class="btn-back" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg> View Case Sheet</a>
+          <a href="dashboard.html" id="btn-view-dashboard" class="btn-next"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect width="7" height="9" x="3" y="3" rx="1"/><rect width="7" height="5" x="14" y="3" rx="1"/><rect width="7" height="9" x="14" y="12" rx="1"/><rect width="7" height="5" x="3" y="16" rx="1"/></svg> Doctor Dashboard</a>
+          <a href="casesheet.html" id="btn-view-casesheet" class="btn-back" style="text-decoration:none; display:inline-flex; align-items:center; gap:6px;"><svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect width="12" height="8" x="6" y="14"/></svg> View Case Sheet</a>
           <button class="btn-back" onclick="resetIntake()">New Patient</button>
         </div>
       </div>
@@ -653,10 +653,16 @@
     nextStep();
   }
   async function submitCase() {
-    const tokenNum = 'A-' + Math.floor(1040 + Math.random() * 20);
-    document.getElementById('token-display').textContent = tokenNum;
+    const tokenNum = window.DocSeeDB ? window.DocSeeDB.getNextTokenNumber().toString() : '1';
+    document.getElementById('token-display').textContent = `Token #${tokenNum}`;
     const dept = document.getElementById('reg-dept').value || 'General Medicine';
-    document.getElementById('token-dept-display').textContent = dept + ' · Floor 2 · OPD Room ' + Math.ceil(Math.random()*5);
+    document.getElementById('token-dept-display').textContent = dept + ' · Floor 2 · OPD Room ' + (1 + (parseInt(tokenNum, 10) % 5));
+
+    // Update complete step action links with newly created token
+    const btnDash = document.getElementById('btn-view-dashboard');
+    if (btnDash) btnDash.href = `dashboard.html?token=${encodeURIComponent(tokenNum)}`;
+    const btnCase = document.getElementById('btn-view-casesheet');
+    if (btnCase) btnCase.href = `casesheet.html?token=${encodeURIComponent(tokenNum)}`;
 
     // Collect full structured case intake payload
     const caseData = {
@@ -693,7 +699,7 @@
       await window.DocSeeDB.savePatientIntake(caseData);
     }
 
-    showToast('Case Sheet saved & synced to Supabase / Dr. Priya Sharma');
+    showToast(`✓ Case Sheet Token #${tokenNum} created & stored in queue`);
     goToStep(6);
   }
   function resetIntake() {

@@ -489,12 +489,12 @@
         <span>Back to Dashboard</span>
       </a>
       <div class="patient-picker">
-        <span>Select Patient:</span>
+        <span>Select Patient Case:</span>
         <select id="case-patient-select" onchange="loadPatientCase(this.value)">
-          <option value="A-1042" selected>Meena Kumari · A-1042 (Cardio/Chest Pain)</option>
-          <option value="A-1043">Rahul Verma · A-1043 (Diabetes/Neuropathy)</option>
-          <option value="A-1044">Sunita Devi · A-1044 (Asthma/Dyspnea)</option>
-          <option value="A-1045">Ramesh Patel · A-1045 (Knee Osteoarthritis)</option>
+          <option value="1" selected>Meena Kumari · Token #1 (Cardio/Chest Pain)</option>
+          <option value="2">Ravi Shankar · Token #2 (Diabetes/Indigestion)</option>
+          <option value="3">Sunita Devi · Token #3 (Asthma/High Fever)</option>
+          <option value="4">Ramesh Patel · Token #4 (Knee Osteoarthritis)</option>
         </select>
       </div>
     </div>
@@ -533,7 +533,7 @@
         </div>
         <div class="sheet-badge-col">
           <span class="doc-type-pill">OPD CASE SHEET</span>
-          <div class="sheet-barcode" id="cs-number">CS-2024-0618-A1042</div>
+          <div class="sheet-barcode" id="cs-number">CS-2024-0618-T1</div>
           <div class="qr-box" title="Scan to verify ABDM record">
             <svg xmlns="http://www.w3.org/2000/svg" width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect width="5" height="5" x="3" y="3" rx="1"/><rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/></svg>
             <span>ABDM QR</span>
@@ -555,10 +555,7 @@
           <label>UHID / OPD Token</label>
           <value class="mono" id="p-token">UHID-98214 · Token #12</value>
         </div>
-        <div class="demo-item">
-          <label>ABHA ID (National Health ID)</label>
-          <value class="mono badge-abha" id="p-abha">91-4432-8871-0024</value>
-        </div>
+
         <div class="demo-item">
           <label>Consulting Physician</label>
           <value>Dr. Priya Sharma, MD</value>
@@ -814,10 +811,10 @@
   <script>
     // PATIENT DATA STORE FOR CASE SHEET GENERATION
     const patientCases = {
-      "A-1042": {
+      "1": {
         name: "Meena Kumari",
-        ageSex: "54 Y / Female",
-        token: "UHID-98214 · Token #12",
+        ageSex: "58 Y / Female",
+        token: "Token #1",
         abha: "91-4432-8871-0024",
         vitalsMeta: "B+ve · BMI 26.3 kg/m²",
         contact: "Suresh Kumar (Son) · 98765-43211",
@@ -842,64 +839,64 @@
           { code: "AGNI", desc: "Vishamagni with Ama lakshana (digestive stagnation)" }
         ]
       },
-      "A-1043": {
-        name: "Rahul Verma",
-        ageSex: "48 Y / Male",
-        token: "UHID-87231 · Token #14",
+      "2": {
+        name: "Ravi Shankar",
+        ageSex: "42 Y / Male",
+        token: "Token #2",
         abha: "91-3312-9901-4421",
         vitalsMeta: "O+ve · BMI 28.1 kg/m²",
         contact: "Pooja Verma (Wife) · 98112-23344",
-        bp: "132/84 mmHg",
-        pulse: "76 bpm",
+        bp: "120/80 mmHg",
+        pulse: "74 bpm",
         spo2: "98%",
-        temp: "98.2 °F",
+        temp: "98.6 °F",
         resp: "16 /min",
-        rbs: "210 mg/dL",
-        hpi: "Patient presents with complaints of <strong>progressive bilateral lower extremity burning sensation and tingling numbness</strong> in a classic stocking distribution for 4 months. Also reports persistent fatigue and polyuria. History of poor compliance with oral hypoglycemic agents.",
-        chronic: "Type-2 Diabetes Mellitus (6 yrs), Dyslipidemia (3 yrs)",
+        rbs: "105 mg/dL",
+        hpi: "Patient presents with complaints of <strong>chronic dyspepsia, acid regurgitation, and fragmented sleep</strong> for 4 weeks. Also reports persistent postprandial bloating and morning sluggishness.",
+        chronic: "Non-ulcer dyspepsia (2 yrs)",
         surgical: "None reported",
         allergies: "No known drug allergies (NKDA)",
         allopathic: [
-          { code: "E11.40", desc: "Type 2 diabetes mellitus with diabetic neuropathy" },
-          { code: "E78.5", desc: "Hyperlipidemia, unspecified" }
+          { code: "K30", desc: "Functional dyspepsia" },
+          { code: "G47.00", desc: "Insomnia, unspecified" }
         ],
         ayush: [
-          { code: "PRAKRITI", desc: "Kapha-Pitta constitution" },
-          { code: "VIKRITI", desc: "Madhumeha with Pada-daha (Vata-Pitta avaran)" },
-          { code: "AGNI", desc: "Mandagni with Kleda vriddhi" }
+          { code: "PRAKRITI", desc: "Vata-Pitta dominant Prakriti with Samana Vata dusti" },
+          { code: "VIKRITI", desc: "Agni mandya with Ajeerna and Anidra" },
+          { code: "AGNI", desc: "Mandaagni with Krura koshtha" }
         ]
       },
-      "A-1044": {
+      "3": {
         name: "Sunita Devi",
         ageSex: "62 Y / Female",
-        token: "UHID-65129 · Token #15",
+        token: "Token #3",
         abha: "91-1123-7744-8890",
         vitalsMeta: "A+ve · BMI 23.4 kg/m²",
         contact: "Anil Devi (Son) · 98234-55667",
         bp: "118/76 mmHg",
-        pulse: "104 bpm",
-        spo2: "91%",
-        temp: "99.1 °F",
+        pulse: "102 bpm",
+        spo2: "93%",
+        temp: "102.1 °F",
         resp: "26 /min",
         rbs: "128 mg/dL",
-        hpi: "Patient arrived with <strong>acute onset dyspnea and bilateral audible wheezing</strong> precipitated by seasonal pollen exposure 2 days ago. Using Salbutamol inhaler with minimal relief. Speaks in broken sentences. SpO2 91% on room air requiring immediate supplemental O2 therapy.",
-        chronic: "Bronchial Asthma (14 yrs), Chronic Allergic Rhinitis",
+        hpi: "Patient arrived with <strong>high-grade fever (102°F), rigors, and productive cough</strong> with yellowish sputum for 4 days. Dyspnea on minimal exertion (NYHA Class II). SpO2 93% on room air requiring immediate supplemental review.",
+        chronic: "Chronic Bronchitis (COPD Stage 1)",
         surgical: "Appendectomy (1998)",
         allergies: "• Sulfa drugs (Erythema multiforme), Aspirin (Bronchospasm)",
         allopathic: [
-          { code: "J45.901", desc: "Unspecified asthma with (acute) exacerbation" },
-          { code: "J96.00", desc: "Acute respiratory failure, unspecified" }
+          { code: "J44.1", desc: "Chronic obstructive pulmonary disease with (acute) exacerbation" },
+          { code: "R50.9", desc: "Fever, unspecified" }
         ],
         ayush: [
-          { code: "PRAKRITI", desc: "Vata-Kapha constitution" },
-          { code: "VIKRITI", desc: "Tamaka Shwasa (Pranavaha srotas dushti with Kapha vega)" },
-          { code: "AGNI", desc: "Tikshnagni with Pitta-Vata udrek" }
+          { code: "PRAKRITI", desc: "Vata-Kapha Sannipataja Jwara" },
+          { code: "VIKRITI", desc: "Pranavaha Srotas dusti with Kasa and Shwasa" },
+          { code: "AGNI", desc: "Teevra Agni mandya, Aama lakshana" }
         ]
       },
-      "A-1045": {
+      "4": {
         name: "Ramesh Patel",
         ageSex: "67 Y / Male",
-        token: "UHID-76492 · Token #18",
+        token: "Token #4",
         abha: "91-5544-2211-9988",
         vitalsMeta: "AB+ve · BMI 27.5 kg/m²",
         contact: "Geeta Patel (Daughter) · 98991-00223",
@@ -909,7 +906,7 @@
         temp: "98.0 °F",
         resp: "15 /min",
         rbs: "114 mg/dL",
-        hpi: "Patient reports <strong>bilateral knee pain, stiffness (worse in morning, lasting 20 mins)</strong> and audible crepitus on stair ambulation for 9 months. Difficulty in squatting and long-distance walking. Responding partially to topical analgesics.",
+        hpi: "Patient reports <strong>bilateral knee pain, stiffness (worse in morning, lasting 20 mins)</strong> and audible crepitus on stair ambulation for 9 months. Difficulty in squatting and long-distance walking.",
         chronic: "Primary Osteoarthritis bilateral knees, Mild BPH",
         surgical: "Cataract surgery OD (2021)",
         allergies: "No known drug allergies (NKDA)",
@@ -925,46 +922,51 @@
     };
 
     function loadPatientCase(patientId) {
-      const p = patientCases[patientId];
+      const p = patientCases[patientId] || patientCases[patientId.toString()];
       if (!p) return;
 
-      document.getElementById('cs-number').textContent = `CS-2024-0618-${patientId}`;
-      document.getElementById('p-name').textContent = p.name;
-      document.getElementById('p-age-sex').textContent = p.ageSex;
-      document.getElementById('p-token').textContent = p.token;
-      document.getElementById('p-abha').textContent = p.abha;
-      document.getElementById('p-vitals-meta').textContent = p.vitalsMeta;
-      document.getElementById('p-contact').textContent = p.contact;
+      const numStr = (patientId || '1').toString().replace('A-', '');
+      document.getElementById('cs-number').textContent = `CS-2024-0618-T${numStr}`;
+      document.getElementById('p-name').textContent = p.name || 'Patient';
+      document.getElementById('p-age-sex').textContent = p.ageSex || '—';
+      document.getElementById('p-token').textContent = p.token || `Token #${numStr}`;
+      document.getElementById('p-abha').textContent = p.abha || '91-XXXX-XXXX-XXXX';
+      document.getElementById('p-vitals-meta').textContent = p.vitalsMeta || 'DocSee Kiosk Auto-Triaged';
+      document.getElementById('p-contact').textContent = p.contact || '+91 98XXX-XXXXX';
 
-      document.getElementById('v-bp').textContent = p.bp;
-      document.getElementById('v-pulse').textContent = p.pulse;
-      document.getElementById('v-spo2').textContent = p.spo2;
-      document.getElementById('v-temp').textContent = p.temp;
-      document.getElementById('v-resp').textContent = p.resp;
-      document.getElementById('v-rbs').textContent = p.rbs;
+      document.getElementById('v-bp').textContent = p.bp || '120/80 mmHg';
+      document.getElementById('v-pulse').textContent = p.pulse || '74 bpm';
+      document.getElementById('v-spo2').textContent = p.spo2 || '98%';
+      document.getElementById('v-temp').textContent = p.temp || '98.6 °F';
+      document.getElementById('v-resp').textContent = p.resp || '16 /min';
+      document.getElementById('v-rbs').textContent = p.rbs || '105 mg/dL';
 
-      document.getElementById('hpi-text').innerHTML = p.hpi;
-      document.getElementById('p-chronic').textContent = p.chronic;
-      document.getElementById('p-surgical').textContent = p.surgical;
-      document.getElementById('p-allergies').textContent = p.allergies;
+      document.getElementById('hpi-text').innerHTML = p.hpi || 'Clinical intake narrative logged via DocSee AI Kiosk.';
+      document.getElementById('p-chronic').textContent = p.chronic || 'None reported';
+      document.getElementById('p-surgical').textContent = p.surgical || 'None reported';
+      document.getElementById('p-allergies').textContent = p.allergies || 'NKDA';
 
       // Render Allopathic Diag
       const alloContainer = document.getElementById('allopathic-diag-list');
-      alloContainer.innerHTML = p.allopathic.map(d => `
-        <div class="diag-item">
-          <span class="diag-code">${d.code}</span>
-          <span class="diag-name">${d.desc}</span>
-        </div>
-      `).join('');
+      if (alloContainer) {
+        alloContainer.innerHTML = (p.allopathic || []).map(d => `
+          <div class="diag-item">
+            <span class="diag-code">${d.code}</span>
+            <span class="diag-name">${d.desc}</span>
+          </div>
+        `).join('') || '<div class="diag-item"><span class="diag-code">Z00.0</span><span class="diag-name">General medical examination</span></div>';
+      }
 
       // Render AYUSH Diag
       const ayushContainer = document.getElementById('ayush-diag-list');
-      ayushContainer.innerHTML = p.ayush.map(d => `
-        <div class="diag-item">
-          <span class="diag-code" style="background:#fde68a;">${d.code}</span>
-          <span class="diag-name">${d.desc}</span>
-        </div>
-      `).join('');
+      if (ayushContainer) {
+        ayushContainer.innerHTML = (p.ayush || []).map(d => `
+          <div class="diag-item">
+            <span class="diag-code" style="background:#fde68a;">${d.code}</span>
+            <span class="diag-name">${d.desc}</span>
+          </div>
+        `).join('') || '<div class="diag-item"><span class="diag-code" style="background:#fde68a;">PRAKRITI</span><span class="diag-name">Sama Prakriti Assessment</span></div>';
+      }
     }
 
     function copyShareLink() {
@@ -988,49 +990,75 @@
 
     // Dynamic Supabase Case Sheet Loader
     async function loadDynamicCaseSheets() {
-      if (window.DocSeeDB) {
-        const localCases = JSON.parse(localStorage.getItem('DOCSEE_LOCAL_CASES_V1') || '{}');
-        const select = document.getElementById('patient-select');
-        Object.keys(localCases).forEach(token => {
-          const c = localCases[token];
-          const optVal = 'dyn-' + token.replace('-', '');
-          if (!document.querySelector(`#patient-select option[value="${optVal}"]`)) {
-            const opt = document.createElement('option');
-            opt.value = optVal;
-            opt.textContent = `${c.patient_name} (${token}) - ${c.chief_complaint}`;
-            select.appendChild(opt);
+      const select = document.getElementById('case-patient-select');
+      if (!select) return;
 
-            caseSheetsData[optVal] = {
-              name: c.patient_name,
-              ageSex: `${c.age} Yrs / ${c.gender}`,
-              token: token,
-              abha: '91-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000),
-              vitalsMeta: "DocSee Kiosk Auto-Triaged · Just now",
-              contact: "+91 98XXX-XXXXX",
-              bp: `${c.vitals?.bpSys || 120}/${c.vitals?.bpDia || 80} mmHg`,
-              pulse: `${c.vitals?.hr || 74} bpm`,
-              spo2: `${c.vitals?.spo2 || 98}%`,
-              temp: `${c.vitals?.temp || 98.6}°F`,
-              resp: "16 /min",
-              rbs: `${c.vitals?.rbs || 105} mg/dL`,
-              hpi: `Patient presents via DocSee kiosk with <strong>${c.chief_complaint}</strong>. ${c.symptoms_narrative || ''} Follow-up questions confirmed clinical presentation. Priority classification: <strong>${c.priority_level}</strong>.`,
-              chronic: (c.existing_conditions && c.existing_conditions.length) ? c.existing_conditions.join(', ') : "None reported",
-              surgical: c.past_surgeries || "None reported",
-              allergies: c.known_allergies || "NKDA",
-              allopathic: [
-                { code: "R07.9", desc: c.chief_complaint },
-                { code: "Z00.00", desc: "General adult medical examination" }
-              ],
-              ayush: [
-                { code: "PR-01", desc: "Vata-Pitta Prakriti Imbalance" },
-                { code: "AM-03", desc: "Mild Agnimandya / Mandagni" }
-              ]
-            };
-          }
-        });
+      const localCasesStr = localStorage.getItem('DOCSEE_LOCAL_CASES_V1');
+      const localCases = localCasesStr ? JSON.parse(localCasesStr) : {};
+
+      // Register all stored case files into patientCases dictionary and populate select
+      Object.keys(localCases).forEach(tokenKey => {
+        const c = localCases[tokenKey];
+        const token = c.token_number || tokenKey;
+        const optVal = token.toString();
+
+        patientCases[optVal] = {
+          name: c.patient_name || 'Patient',
+          ageSex: `${c.age || 30} Y / ${c.gender || 'Not specified'}`,
+          token: `Token #${token}`,
+          abha: c.abha_id || c.abha || ('91-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000) + '-' + Math.floor(1000+Math.random()*9000)),
+          vitalsMeta: "DocSee Kiosk Auto-Triaged · Just now",
+          contact: c.phone || "+91 98XXX-XXXXX",
+          bp: `${c.vitals?.bpSys || 120}/${c.vitals?.bpDia || 80} mmHg`,
+          pulse: `${c.vitals?.hr || 74} bpm`,
+          spo2: `${c.vitals?.spo2 || 98}%`,
+          temp: `${c.vitals?.temp || 98.6} °F`,
+          resp: "16 /min",
+          rbs: `${c.vitals?.rbs || 105} mg/dL`,
+          hpi: `Patient presents via DocSee intake with <strong>${c.chief_complaint || 'unspecified complaint'}</strong>. ${c.symptoms_narrative || ''} Follow-up triage assessment completed. Priority classification: <strong>${c.priority_level || 'Standard'}</strong>.`,
+          chronic: (c.existing_conditions && c.existing_conditions.length) ? c.existing_conditions.join(', ') : "None reported",
+          surgical: c.past_surgeries || "None reported",
+          allergies: c.known_allergies || "NKDA",
+          allopathic: [
+            { code: "R07.9", desc: c.chief_complaint || "General medical consultation" },
+            { code: "Z00.00", desc: "Clinical intake & baseline diagnostic report" }
+          ],
+          ayush: [
+            { code: "PR-01", desc: (c.department && c.department.includes('Ayurveda')) ? "Vata-Pitta Prakriti Lakshana" : "Ayurvedic Rogi Pariksha Recorded" },
+            { code: "AM-03", desc: "Agnimandya & Srotas Assessment" }
+          ]
+        };
+
+        if (!document.querySelector(`#case-patient-select option[value="${optVal}"]`)) {
+          const opt = document.createElement('option');
+          opt.value = optVal;
+          opt.textContent = `${c.patient_name} · Token #${token} (${c.chief_complaint || 'OPD Intake'})`;
+          select.appendChild(opt);
+        }
+      });
+
+      // Check if URL has a specific token requested
+      const urlParams = new URLSearchParams(window.location.search);
+      const requestedToken = urlParams.get('token') || urlParams.get('id');
+
+      if (requestedToken && patientCases[requestedToken]) {
+        select.value = requestedToken;
+        loadPatientCase(requestedToken);
+      } else if (select.options.length > 0) {
+        loadPatientCase(select.value || '1');
       }
     }
+
+    // Real-time synchronization
+    window.addEventListener('docsee:queue-updated', loadDynamicCaseSheets);
+    window.addEventListener('storage', (e) => {
+      if (e.key === 'DOCSEE_LOCAL_CASES_V1' || e.key === 'DOCSEE_LOCAL_QUEUE_V1') {
+        loadDynamicCaseSheets();
+      }
+    });
+
     window.addEventListener('DOMContentLoaded', loadDynamicCaseSheets);
+    loadDynamicCaseSheets();
   </script>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="supabase-client.js"></script>

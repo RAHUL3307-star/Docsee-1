@@ -43,3 +43,6 @@ __pycache__/
 # OS
 .DS_Store
 Thumbs.db
+
+scratch_papers.txt
+clean_root_fixed.html
